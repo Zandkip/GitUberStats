@@ -22,6 +22,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="GetStatistics.py" />
+    <Compile Include="GitCommit.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="GitUser.py">
       <SubType>Code</SubType>
     </Compile>
