@@ -1,4 +1,5 @@
 import subprocess
+from GitUser import GitUser
 
 def GetLog():
     print("Getting logs for Git archive")
@@ -8,6 +9,8 @@ def ParseLog(log):
     print("Parsing Git log")
     commits = GetCommitsFromLog(log)
     print("Found " + str(len(commits)) + " commits")
+    users = ExtractUsersFromCommits(commits)
+    print("Found " + str(len(users)) + " user(s)")
 
 def GetCommitsFromLog(log):
     lines = log.splitlines()
@@ -23,6 +26,30 @@ def GetCommitsFromLog(log):
             singleCommit.clear()
         singleCommit.append(stringLine)
     return commits
+
+def ExtractUsersFromCommits(commits):
+    print("Extracting users from commits")
+    users = []
+    for commit in commits:
+        if commit[1].startswith("Author: "):
+            userName = commit[1][8:]
+            if not UserExists(users, userName):
+                user = GitUser(userName)
+                users.append(user)
+            GetUserByName(users, userName).AddCommit(commit)
+    return users
+
+def UserExists(users, userName):
+    for i, j in enumerate(users):
+        if j.name == userName:
+            return True
+    return False
+
+def GetUserByName(users, userName):
+    for i, j in enumerate(users):
+        if j.name == userName:
+            return j
+    return 0
 
 if __name__ == '__main__':
     log = GetLog()
