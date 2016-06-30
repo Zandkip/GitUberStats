@@ -1,3 +1,5 @@
+import copy
+
 class GitUser:
     name = ""
     commits = []
@@ -6,5 +8,7 @@ class GitUser:
         self.name = name
 
     def AddCommit(self, commit):
-        self.commits.append(commit)
+        trimmedCommit = copy.copy(commit)
+        del trimmedCommit[1]
+        self.commits.append(trimmedCommit)
 

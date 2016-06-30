@@ -1,4 +1,5 @@
 import subprocess
+import copy
 from GitUser import GitUser
 
 def GetLog():
@@ -21,8 +22,9 @@ def GetCommitsFromLog(log):
     for line in trimmedLines:
         stringLine = line.decode("utf-8")
         if stringLine.startswith("commit"):
-            if singleCommit.count != 0:
-                commits.append(singleCommit)
+            if singleCommit:
+                newCommit = copy.copy(singleCommit)
+                commits.append(newCommit)
             singleCommit.clear()
         singleCommit.append(stringLine)
     return commits
