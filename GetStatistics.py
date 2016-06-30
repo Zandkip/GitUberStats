@@ -23,7 +23,7 @@ def GetCommitsFromLog(log):
         stringLine = line.decode("utf-8")
         if stringLine.startswith("commit"):
             if singleCommit:
-                newCommit = copy.copy(singleCommit)
+                newCommit = copy.deepcopy(singleCommit)
                 commits.append(newCommit)
             singleCommit.clear()
         singleCommit.append(stringLine)
